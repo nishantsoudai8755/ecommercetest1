@@ -1,12 +1,12 @@
 const form = document.getElementById('addProductForm');
 const productList = document.getElementById('productList');
 
-// Get existing products from Local Storage or create an empty array
+// Get products from Local Storage
 const products = JSON.parse(localStorage.getItem('products')) || [];
 
-// Function to update the product list UI
+// Function to display products in the admin panel
 function updateProductList() {
-  productList.innerHTML = ''; // Clear the list
+  productList.innerHTML = ''; // Clear current list
   products.forEach((product, index) => {
     const li = document.createElement('li');
     li.innerHTML = `
@@ -18,7 +18,7 @@ function updateProductList() {
   });
 }
 
-// Add a product to the list
+// Form submit event to add a new product
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -27,11 +27,10 @@ form.addEventListener('submit', (e) => {
   const price = document.getElementById('productPrice').value;
   const image = document.getElementById('productImage').value;
 
-  // Save product to the array
   const product = { name, sku, price, image };
   products.push(product);
 
-  // Save updated products array to Local Storage
+  // Save updated products to Local Storage
   localStorage.setItem('products', JSON.stringify(products));
 
   // Update the product list UI
@@ -41,11 +40,11 @@ form.addEventListener('submit', (e) => {
   form.reset();
 });
 
-// Delete a product
+// Delete product function
 function deleteProduct(index) {
-  products.splice(index, 1); // Remove product from array
-  localStorage.setItem('products', JSON.stringify(products)); // Update Local Storage
-  updateProductList(); // Update UI
+  products.splice(index, 1);
+  localStorage.setItem('products', JSON.stringify(products));
+  updateProductList();
 }
 
 // Initial UI update
