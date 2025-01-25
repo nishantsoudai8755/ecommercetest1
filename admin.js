@@ -1,6 +1,7 @@
 const form = document.getElementById('addProductForm');
 const productList = document.getElementById('productList');
 
+
 const products = []; // Temporary storage for products
 
 form.addEventListener('submit', (e) => {
@@ -11,16 +12,16 @@ form.addEventListener('submit', (e) => {
   const price = document.getElementById('productPrice').value;
   const image = document.getElementById('productImage').value;
 
-  // Save product
   const product = { name, sku, price, image };
   products.push(product);
 
-  // Update UI
-  updateProductList();
+  // Save to Local Storage
+  localStorage.setItem('products', JSON.stringify(products));
 
-  // Clear form
+  updateProductList();
   form.reset();
 });
+
 
 function updateProductList() {
   productList.innerHTML = ''; // Clear the list
