@@ -1,8 +1,9 @@
 const productsList = document.getElementById('productsList');
 
-// Dummy products (replace with database later)
+// Fetch products from Local Storage
 const products = JSON.parse(localStorage.getItem('products')) || [];
 
+// Function to display products on the page
 function displayProducts() {
   productsList.innerHTML = '';
   products.forEach((product) => {
@@ -15,4 +16,5 @@ function displayProducts() {
   });
 }
 
+// Initial render
 displayProducts();
