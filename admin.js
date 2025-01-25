@@ -1,28 +1,10 @@
 const form = document.getElementById('addProductForm');
 const productList = document.getElementById('productList');
 
+// Get existing products from Local Storage or create an empty array
+const products = JSON.parse(localStorage.getItem('products')) || [];
 
-const products = []; // Temporary storage for products
-
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById('productName').value;
-  const sku = document.getElementById('productSKU').value;
-  const price = document.getElementById('productPrice').value;
-  const image = document.getElementById('productImage').value;
-
-  const product = { name, sku, price, image };
-  products.push(product);
-
-  // Save to Local Storage
-  localStorage.setItem('products', JSON.stringify(products));
-
-  updateProductList();
-  form.reset();
-});
-
-
+// Function to update the product list UI
 function updateProductList() {
   productList.innerHTML = ''; // Clear the list
   products.forEach((product, index) => {
@@ -36,7 +18,35 @@ function updateProductList() {
   });
 }
 
-function deleteProduct(index) {
-  products.splice(index, 1);
+// Add a product to the list
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById('productName').value;
+  const sku = document.getElementById('productSKU').value;
+  const price = document.getElementById('productPrice').value;
+  const image = document.getElementById('productImage').value;
+
+  // Save product to the array
+  const product = { name, sku, price, image };
+  products.push(product);
+
+  // Save updated products array to Local Storage
+  localStorage.setItem('products', JSON.stringify(products));
+
+  // Update the product list UI
   updateProductList();
+
+  // Clear the form
+  form.reset();
+});
+
+// Delete a product
+function deleteProduct(index) {
+  products.splice(index, 1); // Remove product from array
+  localStorage.setItem('products', JSON.stringify(products)); // Update Local Storage
+  updateProductList(); // Update UI
 }
+
+// Initial UI update
+updateProductList();
